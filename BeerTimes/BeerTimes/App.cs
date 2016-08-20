@@ -10,50 +10,51 @@ namespace BeerTimes
     public class App : Application
     {
 
-        public Entry SearchField = new Entry()
-        {
-            Placeholder = "Enter a Beer"
-        };
+        //public Entry SearchField = new Entry()
+        //{
+        //    Placeholder = "Enter a Beer"
+        //};
 
-        public Button SearchButton = new Button()
-        {
-            Text = "Search"
-        };
+        //public Button SearchButton = new Button()
+        //{
+        //    Text = "Search"
+        //};
 
-        ListView ResultsList = new ListView();
+        //ListView ResultsList = new ListView();
 
         public App()
         {
 
             // The root page of your application
-            MainPage = new ContentPage
-            {
-                Content = new StackLayout
-                {
-                    VerticalOptions = LayoutOptions.Center,
-                    Children = {
-                       SearchField,
-                       SearchButton,
-                       ResultsList
-                    }
-                }
-            };
+            MainPage = new RootPage();
+            //MainPage = new ContentPage
+            //{
+            //    Content = new StackLayout
+            //    {
+            //        VerticalOptions = LayoutOptions.Center,
+            //        Children = {
+            //           SearchField,
+            //           SearchButton,
+            //           ResultsList
+            //        }
+            //    }
+            //};
 
 
-            SearchButton.Clicked += async (sender, e) =>
-            {
-                Task<List<Beer>> getBeersTask = Beer.GetBeersByName(SearchField.Text);
-                List<Beer> r = await getBeersTask;
+            //SearchButton.Clicked += async (sender, e) =>
+            //{
+            //    Task<List<Beer>> getBeersTask = Beer.GetBeersByName(SearchField.Text);
+            //    List<Beer> r = await getBeersTask;
 
-                List<string> listSource = new List<string>();
-                foreach (Beer b in r)
-                {
-                    listSource.Add(b.name);
-                }
+            //    List<string> listSource = new List<string>();
+            //    foreach (Beer b in r)
+            //    {
+            //        listSource.Add(b.name);
+            //    }
 
-                ResultsList.ItemsSource = listSource.ToArray();
+            //    ResultsList.ItemsSource = listSource.ToArray();
 
-            };
+            //};
 
         }
 
