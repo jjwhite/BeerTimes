@@ -5,7 +5,7 @@ using BeerTimes.Droid;
 
 namespace BeerTimes.Droid
 {
-    public class Utility_Android
+    public class Utility_Android : IUtility
     {
         public void LogMessage(string title, string message)
         {
@@ -14,6 +14,11 @@ namespace BeerTimes.Droid
             + System.Environment.NewLine + "*********************************************"
             + System.Environment.NewLine;
             Android.Util.Log.Debug(title, _msg);
+        }
+
+        public string GetDBPath()
+        {
+            return Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "BeerTimes.db");
         }
 
     }

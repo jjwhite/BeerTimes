@@ -37,6 +37,20 @@ namespace BeerTimes
                 ResultsList.ItemsSource = listSource.ToArray();
 
             };
+
+            ResultsList.ItemSelected += (sender, e) =>
+            {
+                //((ListView)sender).SelectedItem = null;
+                
+                MyBeerLocal b = new MyBeerLocal() {
+                    id="blah",
+                    name = e.SelectedItem.ToString()
+                };
+
+                b.save();
+            
+
+            };
         }
 
         public Entry SearchField = new Entry()
@@ -50,7 +64,7 @@ namespace BeerTimes
         };
 
         ListView ResultsList = new ListView();
+        
 
-
-    }
+}
 }

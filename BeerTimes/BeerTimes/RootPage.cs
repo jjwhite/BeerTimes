@@ -13,7 +13,7 @@ namespace BeerTimes
             menuPage.Menu.ItemSelected += (sender, e) => NavigateTo(e.SelectedItem as MenuItem);
 
             Master = menuPage;
-            Detail = new NavigationPage(new SearchPage());
+            Detail = new NavigationPage(new MyBeersPage());
         }
 
         void NavigateTo(MenuItem menu)

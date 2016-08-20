@@ -7,11 +7,16 @@ using Xamarin.Forms;
 
 namespace BeerTimes
 {
-    public static class Utility
+    class Utility
     {
         public static void LogMessage(string title, string message)
         {
             DependencyService.Get<IUtility>().LogMessage(title, message);
+        }
+
+        public static String GetDBPath()
+        {
+            return DependencyService.Get<IUtility>().GetDBPath();
         }
     }
 }

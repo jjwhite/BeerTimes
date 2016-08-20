@@ -9,5 +9,6 @@ namespace BeerTimes
     public interface IUtility
     {
         void LogMessage(string title, string message);
+        string GetDBPath();
     }
 }
