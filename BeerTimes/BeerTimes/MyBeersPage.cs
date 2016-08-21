@@ -23,6 +23,8 @@ namespace BeerTimes
 
             //MyBeerLocal.BuildMockBeerList();
             CreateBeerList();
+
+
         }
 
         private void CreateBeerList()

@@ -32,5 +32,9 @@ namespace BeerTimes
         public List<Beer> data;
     }
 
+    public class BeerResult : APIResult {
+        public Beer data;
+    }
+
 
 }

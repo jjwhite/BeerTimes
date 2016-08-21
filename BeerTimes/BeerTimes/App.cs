@@ -27,6 +27,7 @@ namespace BeerTimes
 
             // The root page of your application
             MainPage = new RootPage();
+            
             //MainPage = new ContentPage
             //{
             //    Content = new StackLayout
