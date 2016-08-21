@@ -9,12 +9,15 @@ namespace BeerTimes
 {
     public class MyBeersPage : ContentPage
     {
+
         ListView BeerList = new ListView();
+        
 
         public MyBeersPage()
         {
             Title = "My Beers";
-            Content = new StackLayout {
+            Content = new StackLayout
+            {
                 Children =
                 {
                     BeerList
@@ -23,21 +26,50 @@ namespace BeerTimes
 
             //MyBeerLocal.BuildMockBeerList();
             CreateBeerList();
-
+            BeerList.ItemSelected += (sender, e) =>
+            {
+                MyBeerCell bc = e.SelectedItem as MyBeerCell;
+                Navigation.PushModalAsync(new SingleBeerPage(bc.Id));
+            };
 
         }
 
         private void CreateBeerList()
         {
             List<MyBeerLocal> localBeer = MyBeerLocal.GetMyBeers();
-            List<string> beerNames = new List<string>();
+            List<MyBeerCell> listSource = new List<MyBeerCell>();
 
-            foreach(MyBeerLocal b in localBeer)
+            var cell = new DataTemplate(typeof(ImageCell));
+            cell.SetBinding(TextCell.TextProperty, "Name");
+
+            foreach (MyBeerLocal b in localBeer)
             {
-                beerNames.Add(b.name);
+                listSource.Add(new MyBeerCell(
+                        b.id,
+                        b.name
+                        ));
             }
 
-            BeerList.ItemsSource = beerNames.ToArray();
+            BeerList.ItemsSource = listSource;
+            BeerList.ItemTemplate = cell;
+        }
+
+
+
+
+    }
+
+
+    public class MyBeerCell
+    {
+        public string Id { get; set; }
+        public string Name { get; set; }
+
+        public MyBeerCell(string id, string name)
+        {
+            this.Id = id;
+            this.Name = name;
+
         }
     }
 }

@@ -9,11 +9,18 @@ namespace BeerTimes
     {
         public Label name;
         public Label brewery;
+        public Label abv;
+        public Label ibus;
+        public Label style;
         public Entry comments;
         public Entry rating;
 
-        public Button addToMyBeers;
+        public Button saveButton;
+        public Button addToWishlist;
+        public Button delete;
+
         public Beer theBeer;
+        public MyBeerLocal theLocalBeer;
 
         public SingleBeerPage(string beerId)
         {
@@ -25,42 +32,87 @@ namespace BeerTimes
         {
             Task<Beer> getBeerTask = Beer.GetBeerById(beerId);
             theBeer = await getBeerTask;
+
+            theLocalBeer = MyBeerLocal.GetMyBeerById(beerId);
+            
+
             Title = theBeer.name;
             name = new Label()
             {
-                Text = theBeer.name
+                Text = theBeer.name,
+                FontSize = 25.0,
+                HorizontalTextAlignment = TextAlignment.Center,
             };
 
             brewery = new Label() {
                 Text = theBeer.breweries.Count > 0 ? theBeer.breweries[0].name : ""
             };
 
-            addToMyBeers = new Button()
-            {
-                Text = "Add To My Beers"
+            abv = new Label() {
+                Text = "ABV: " + theBeer.abv
             };
 
+            ibus = new Label() {
+                Text = "IBUs: " + theBeer.ibu
+            };
+
+            saveButton = new Button()
+            {
+                Text = "Save",
+                BackgroundColor = Color.Green
+            };
+
+            addToWishlist = new Button()
+            {
+                Text = "Add to Wishlist",
+                BackgroundColor = Color.Gray
+            };
+
+            delete = new Button()
+            {
+                Text = "Delete",
+                BackgroundColor = Color.Red
+            };
+
+           
             comments = new Entry()
             {
                 MinimumHeightRequest = 200d,
                 Placeholder = "Enter your comments"
             };
+            
 
             rating = new Entry() {
                 Placeholder = "0-5"
             };
 
-            addToMyBeers.Clicked += AddToMyBeers_Clicked;
+            if (theLocalBeer == null)
+            {
+                delete.IsVisible = false;
+            }
+            else
+            {
+                comments.Text = theLocalBeer.comment;
+                rating.Text = theLocalBeer.rating.ToString();
+            }
+
+            saveButton.Clicked += AddToMyBeers_Clicked;
+            addToWishlist.Clicked += AddToWishlist_Clicked;
 
             Content = new StackLayout {
-                VerticalOptions = LayoutOptions.Center,
                 Children = {
                        name,
                        brewery,
+                       ibus,
+                       abv,
                        rating,
                        comments,
-                       addToMyBeers
-                    }
+                       saveButton,
+                       addToWishlist,
+                       delete
+                    },
+                Padding = new Thickness(15,20,15, 20),
+                Spacing = 15
             };
         
         }
@@ -72,7 +124,23 @@ namespace BeerTimes
                 id = theBeer.id,
                 name = theBeer.name,
                 rating = Convert.ToInt16(rating.Text),
-                comment = comments.Text
+                comment = comments.Text,
+                onwishlist = false
+
+            };
+
+            b.save();
+        }
+
+        private void AddToWishlist_Clicked(object sender, System.EventArgs e)
+        {
+            MyBeerLocal b = new MyBeerLocal()
+            {
+                id = theBeer.id,
+                name = theBeer.name,
+                rating = Convert.ToInt16(rating.Text),
+                comment = comments.Text,
+                onwishlist = true
 
             };
 

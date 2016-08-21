@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
+
 namespace BeerTimes
 {
     public class App : Application
@@ -26,8 +27,10 @@ namespace BeerTimes
         {
 
             // The root page of your application
-            MainPage = new RootPage();
             
+            MainPage = new RootPage();
+
+          
             //MainPage = new ContentPage
             //{
             //    Content = new StackLayout

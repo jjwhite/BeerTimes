@@ -17,7 +17,7 @@ namespace BeerTimes
         public string description { get; set; }
         public string originalGravity { get; set; }
         public string ibu { get; set; }
-        public Style style { get; set; }
+        public BeerStyle style { get; set; }
         public List<Brewery> breweries { get; set; }
 
         public static async Task<Beer> GetBeerById(string id)
@@ -93,7 +93,7 @@ namespace BeerTimes
     }
 }
 
-public class Style
+public class BeerStyle
 {
     public int id { get; set; }
     public string name { get; set; }
