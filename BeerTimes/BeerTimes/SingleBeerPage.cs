@@ -38,6 +38,10 @@ namespace BeerTimes
             theBeer = await getBeerTask;
 
             theLocalBeer = MyBeerLocal.GetMyBeerById(beerId);
+            if (theLocalBeer == null)
+            {
+                theLocalBeer = new MyBeerLocal();
+            }
            
             
             Title = theBeer.name;
@@ -207,49 +211,50 @@ namespace BeerTimes
 
         private void SetRating()
         {
-            switch (theLocalBeer.rating) {
-                case 1:
-                    starImage1.Source = "caprating_on.png";
-                    starImage2.Source = "caprating_off.png";
-                    starImage3.Source = "caprating_off.png";
-                    starImage4.Source = "caprating_off.png";
-                    starImage5.Source = "caprating_off.png";
-                    break;
-                case 2:
-                    starImage1.Source = "caprating_on.png";
-                    starImage2.Source = "caprating_on.png";
-                    starImage3.Source = "caprating_off.png";
-                    starImage4.Source = "caprating_off.png";
-                    starImage5.Source = "caprating_off.png";
-                    break;
+            if (theLocalBeer != null){
+                switch (theLocalBeer.rating) {
+                    case 1:
+                        starImage1.Source = "caprating_on.png";
+                        starImage2.Source = "caprating_off.png";
+                        starImage3.Source = "caprating_off.png";
+                        starImage4.Source = "caprating_off.png";
+                        starImage5.Source = "caprating_off.png";
+                        break;
+                    case 2:
+                        starImage1.Source = "caprating_on.png";
+                        starImage2.Source = "caprating_on.png";
+                        starImage3.Source = "caprating_off.png";
+                        starImage4.Source = "caprating_off.png";
+                        starImage5.Source = "caprating_off.png";
+                        break;
 
-                case 3:
-                    starImage1.Source = "caprating_on.png";
-                    starImage2.Source = "caprating_on.png";
-                    starImage3.Source = "caprating_on.png";
-                    starImage4.Source = "caprating_off.png";
-                    starImage5.Source = "caprating_off.png";
-                    break;
+                    case 3:
+                        starImage1.Source = "caprating_on.png";
+                        starImage2.Source = "caprating_on.png";
+                        starImage3.Source = "caprating_on.png";
+                        starImage4.Source = "caprating_off.png";
+                        starImage5.Source = "caprating_off.png";
+                        break;
 
-                case 4:
-                    starImage1.Source = "caprating_on.png";
-                    starImage2.Source = "caprating_on.png";
-                    starImage3.Source = "caprating_on.png";
-                    starImage4.Source = "caprating_on.png";
-                    starImage5.Source = "caprating_off.png";
+                    case 4:
+                        starImage1.Source = "caprating_on.png";
+                        starImage2.Source = "caprating_on.png";
+                        starImage3.Source = "caprating_on.png";
+                        starImage4.Source = "caprating_on.png";
+                        starImage5.Source = "caprating_off.png";
 
-                    break;
+                        break;
 
-                case 5:
-                    starImage1.Source = "caprating_on.png";
-                    starImage2.Source = "caprating_on.png";
-                    starImage3.Source = "caprating_on.png";
-                    starImage4.Source = "caprating_on.png";
-                    starImage5.Source = "caprating_on.png";
+                    case 5:
+                        starImage1.Source = "caprating_on.png";
+                        starImage2.Source = "caprating_on.png";
+                        starImage3.Source = "caprating_on.png";
+                        starImage4.Source = "caprating_on.png";
+                        starImage5.Source = "caprating_on.png";
 
-                    break;
+                        break;
+                }
             }
-
         }
         private void AddToMyBeers_Clicked(object sender, System.EventArgs e)
         {
