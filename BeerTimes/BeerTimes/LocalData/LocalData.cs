@@ -40,6 +40,12 @@ namespace BeerTimes
             }
         }
 
+        public  void delete()
+        {
+            SQLiteConnection localconn = LocalDataHelper.GetConnection();
+            localconn.Delete(this);
+        }
+
         public static List<MyBeerLocal> GetMyBeers()
         {
             try {

@@ -12,12 +12,16 @@ namespace BeerTimes
         public Label abv;
         public Label ibus;
         public Label style;
-        public Entry comments;
+        public Label commentLabel;
+        public Editor comments;
         public Entry rating;
 
         public Button saveButton;
         public Button addToWishlist;
-        public Button delete;
+        public Button deleteButton;
+
+        public StackLayout starLayout;
+        public Image starImage1, starImage2, starImage3, starImage4, starImage5;
 
         public Beer theBeer;
         public MyBeerLocal theLocalBeer;
@@ -34,9 +38,50 @@ namespace BeerTimes
             theBeer = await getBeerTask;
 
             theLocalBeer = MyBeerLocal.GetMyBeerById(beerId);
+           
             
-
             Title = theBeer.name;
+
+            starImage1 = new Image() { Source = "caprating_off.png" };
+            
+            starImage2 = new Image() { Source = "caprating_off.png" };
+            starImage3 = new Image() { Source = "caprating_off.png" };
+            starImage4 = new Image() { Source = "caprating_off.png" };
+            starImage5 = new Image() { Source = "caprating_off.png" };
+
+            var tapGestureRecognizer = new TapGestureRecognizer();
+            tapGestureRecognizer.Tapped += OnTapGestureRecognizerTapped1;
+            starImage1.GestureRecognizers.Add(tapGestureRecognizer);
+
+            var tapGestureRecognizer2 = new TapGestureRecognizer();
+            tapGestureRecognizer2.Tapped += OnTapGestureRecognizerTapped2;
+            starImage2.GestureRecognizers.Add(tapGestureRecognizer2);
+
+            var tapGestureRecognizer3 = new TapGestureRecognizer();
+            tapGestureRecognizer3.Tapped += OnTapGestureRecognizerTapped3;
+            starImage3.GestureRecognizers.Add(tapGestureRecognizer3);
+
+            var tapGestureRecognizer4 = new TapGestureRecognizer();
+            tapGestureRecognizer4.Tapped += OnTapGestureRecognizerTapped4;
+            starImage4.GestureRecognizers.Add(tapGestureRecognizer4);
+
+            var tapGestureRecognizer5 = new TapGestureRecognizer();
+            tapGestureRecognizer5.Tapped += OnTapGestureRecognizerTapped5;
+            starImage5.GestureRecognizers.Add(tapGestureRecognizer5);
+
+            starLayout = new StackLayout()
+            {
+                Orientation = StackOrientation.Horizontal,
+                Children = {
+                      starImage1,
+                      starImage2,
+                      starImage3,
+                      starImage4,
+                      starImage5,
+
+                    },
+            };
+
             name = new Label()
             {
                 Text = theBeer.name,
@@ -68,17 +113,20 @@ namespace BeerTimes
                 BackgroundColor = Color.Gray
             };
 
-            delete = new Button()
+            deleteButton = new Button()
             {
                 Text = "Delete",
                 BackgroundColor = Color.Red
             };
 
-           
-            comments = new Entry()
+
+            commentLabel = new Label() {
+                Text = "Enter your comments below:",
+            };
+
+            comments = new Editor()
             {
-                MinimumHeightRequest = 200d,
-                Placeholder = "Enter your comments"
+                VerticalOptions = LayoutOptions.FillAndExpand
             };
             
 
@@ -88,7 +136,7 @@ namespace BeerTimes
 
             if (theLocalBeer == null)
             {
-                delete.IsVisible = false;
+                deleteButton.IsVisible = false;
             }
             else
             {
@@ -98,6 +146,9 @@ namespace BeerTimes
 
             saveButton.Clicked += AddToMyBeers_Clicked;
             addToWishlist.Clicked += AddToWishlist_Clicked;
+            deleteButton.Clicked += DeleteButton_Clicked;
+
+            SetRating();
 
             Content = new StackLayout {
                 Children = {
@@ -105,11 +156,13 @@ namespace BeerTimes
                        brewery,
                        ibus,
                        abv,
-                       rating,
+                       //rating,
+                       starLayout,
+                       commentLabel,
                        comments,
                        saveButton,
                        addToWishlist,
-                       delete
+                       deleteButton
                     },
                 Padding = new Thickness(15,20,15, 20),
                 Spacing = 15
@@ -117,13 +170,94 @@ namespace BeerTimes
         
         }
 
+        void OnTapGestureRecognizerTapped1(object sender, EventArgs args)
+        {
+            theLocalBeer.rating = 1;
+            SetRating();
+
+        }
+
+        void OnTapGestureRecognizerTapped2(object sender, EventArgs args)
+        {
+            theLocalBeer.rating = 2;
+            SetRating();
+
+        }
+
+        void OnTapGestureRecognizerTapped3(object sender, EventArgs args)
+        {
+            theLocalBeer.rating = 3;
+            SetRating();
+
+        }
+
+        void OnTapGestureRecognizerTapped4(object sender, EventArgs args)
+        {
+            theLocalBeer.rating = 4;
+            SetRating();
+
+        }
+
+        void OnTapGestureRecognizerTapped5(object sender, EventArgs args)
+        {
+            theLocalBeer.rating = 5;
+            SetRating();
+
+        }
+
+        private void SetRating()
+        {
+            switch (theLocalBeer.rating) {
+                case 1:
+                    starImage1.Source = "caprating_on.png";
+                    starImage2.Source = "caprating_off.png";
+                    starImage3.Source = "caprating_off.png";
+                    starImage4.Source = "caprating_off.png";
+                    starImage5.Source = "caprating_off.png";
+                    break;
+                case 2:
+                    starImage1.Source = "caprating_on.png";
+                    starImage2.Source = "caprating_on.png";
+                    starImage3.Source = "caprating_off.png";
+                    starImage4.Source = "caprating_off.png";
+                    starImage5.Source = "caprating_off.png";
+                    break;
+
+                case 3:
+                    starImage1.Source = "caprating_on.png";
+                    starImage2.Source = "caprating_on.png";
+                    starImage3.Source = "caprating_on.png";
+                    starImage4.Source = "caprating_off.png";
+                    starImage5.Source = "caprating_off.png";
+                    break;
+
+                case 4:
+                    starImage1.Source = "caprating_on.png";
+                    starImage2.Source = "caprating_on.png";
+                    starImage3.Source = "caprating_on.png";
+                    starImage4.Source = "caprating_on.png";
+                    starImage5.Source = "caprating_off.png";
+
+                    break;
+
+                case 5:
+                    starImage1.Source = "caprating_on.png";
+                    starImage2.Source = "caprating_on.png";
+                    starImage3.Source = "caprating_on.png";
+                    starImage4.Source = "caprating_on.png";
+                    starImage5.Source = "caprating_on.png";
+
+                    break;
+            }
+
+        }
         private void AddToMyBeers_Clicked(object sender, System.EventArgs e)
         {
             MyBeerLocal b = new MyBeerLocal()
             {
                 id = theBeer.id,
                 name = theBeer.name,
-                rating = Convert.ToInt16(rating.Text),
+                rating = theLocalBeer.rating,
                 comment = comments.Text,
                 onwishlist = false
 
@@ -138,13 +272,18 @@ namespace BeerTimes
             {
                 id = theBeer.id,
                 name = theBeer.name,
-                rating = Convert.ToInt16(rating.Text),
+               rating = theLocalBeer.rating,
                 comment = comments.Text,
                 onwishlist = true
 
             };
 
             b.save();
+        }
+
+        private void DeleteButton_Clicked(object sender, System.EventArgs e)
+        {
+            theLocalBeer.delete();
         }
     }
 }

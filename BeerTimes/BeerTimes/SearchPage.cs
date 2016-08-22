@@ -19,16 +19,24 @@ namespace BeerTimes
                 Children = {
                        SearchField,
                        SearchButton,
+                       Spinner,
                        ResultsList
                     }
             };
 
             SearchButton.Clicked += async (sender, e) =>
             {
+
+                Spinner.IsVisible = true;
+                Spinner.IsRunning = true;
+
+                List<BeerCell> listSource = new List<BeerCell>();
+                ResultsList.ItemsSource = listSource;
+
                 Task<List<Beer>> getBeersTask = Beer.GetBeersByName(SearchField.Text);
                 List<Beer> r = await getBeersTask;
 
-                List<BeerCell> listSource = new List<BeerCell>();
+                
 
                 var cell = new DataTemplate(typeof(ImageCell));
                 cell.SetBinding(TextCell.TextProperty, "Name");
@@ -55,6 +63,8 @@ namespace BeerTimes
                         icon
                         ));
                 }
+                Spinner.IsRunning = false;
+                Spinner.IsVisible = false;
 
                 ResultsList.ItemsSource = listSource;
                 ResultsList.ItemTemplate = cell;
@@ -86,7 +96,7 @@ namespace BeerTimes
 
             };
         }
-
+        public ActivityIndicator Spinner = new ActivityIndicator();
         public Entry SearchField = new Entry()
         {
             Placeholder = "Enter a Beer"
